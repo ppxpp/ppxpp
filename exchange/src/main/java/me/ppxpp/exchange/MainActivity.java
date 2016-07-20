@@ -57,7 +57,20 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn)
     void scrollToPosition(){
-        mLayoutManager.scrollToPositionWithOffset(1, 100);
+        //mAdapter.addItem();
+        //mRecycleView.smoothScrollToPosition(mAdapter.getItemCount());
+        mRecycleView.setTranslationY(-200);
+        mRecycleView.setPadding(0, 200, 0, 0);
+        //mRecycleView.scrollBy(0, 400);
+    }
+
+    @OnClick(R.id.remove)
+    void removeItems(){
+        //mRecycleView.smoothScrollToPosition(mAdapter.getItemCount() - 3);
+        //mAdapter.removeItem();
+        mRecycleView.setTranslationY(0);
+        mRecycleView.setPadding(0, 0, 0, 0);
+        //mRecycleView.scrollBy(0, -400);
     }
 
 }
