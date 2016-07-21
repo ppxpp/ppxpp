@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.daimajia.swipe.SwipeLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,8 +17,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.ppxpp.exchange.R;
 import me.ppxpp.exchange.SimpleTouchCallback;
+import me.ppxpp.library.Log.LogUtils;
 
 /**
  * Created by zhouhao on 2016/7/17.
@@ -133,21 +138,42 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
     public static class ContentViewHolder extends TestViewHolder
             implements SimpleTouchCallback.TouchHelperViewHolder{
 
+        private String TAG = getClass().getSimpleName();
+
         @BindView(R.id.title)
         TextView title;
 
         View rootView;
+        @BindView(R.id.swipe_layout)
+        SwipeLayout mSwipeLayout;
+        @BindView(R.id.bottom_wrapper)
+        View mWrapper;
 
         public ContentViewHolder(View itemView) {
             super(itemView);
             rootView = itemView;
             ButterKnife.bind(this, itemView);
+            mSwipeLayout.addDrag(SwipeLayout.DragEdge.Left, mWrapper);
+            mSwipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
+            mSwipeLayout.setClickToClose(true);
+        }
+
+        @OnClick({R.id.btn1, R.id.btn2})
+        public void onClick(){
+            int position = getAdapterPosition();
+            Toast.makeText(rootView.getContext(), "onClick " + position, Toast.LENGTH_SHORT).show();
+            mSwipeLayout.close(true);
+        }
+
+        public void closeSwipLayout(){
+            if (mSwipeLayout.getOpenStatus() != SwipeLayout.Status.Close){
+                mSwipeLayout.close(true);
+            }
         }
 
         public void setContent(String content){
             title.setText(content);
         }
-
 
         @Override
         public void onItemSelected() {

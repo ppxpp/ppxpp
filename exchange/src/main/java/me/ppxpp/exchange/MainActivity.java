@@ -39,10 +39,27 @@ public class MainActivity extends AppCompatActivity {
         helper.attachToRecyclerView(mRecycleView);
         mRecycleView.setAdapter(mAdapter);
 
-        RecyclerViewItemClickHelper.addTo(mRecycleView).setOnItemClickListener(new RecyclerViewItemClickHelper.OnItemClickListener() {
+        /*RecyclerViewItemClickHelper.addTo(mRecycleView).setOnItemClickListener(new RecyclerViewItemClickHelper.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 Toast.makeText(getApplicationContext(), "position = " + position, Toast.LENGTH_SHORT).show();
+            }
+        });*/
+        mRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_DRAGGING){
+                    int from = mLayoutManager.findFirstVisibleItemPosition();
+                    int end = mLayoutManager.findLastVisibleItemPosition();
+                    for (int i = from; i < end; i++) {
+                        RecyclerView.ViewHolder vh = mRecycleView.findViewHolderForAdapterPosition(i);
+                        if (vh instanceof TestAdapter.ContentViewHolder){
+                            TestAdapter.ContentViewHolder cvh = (TestAdapter.ContentViewHolder) vh;
+                            cvh.closeSwipLayout();
+                        }
+                    }
+                }
             }
         });
     }
