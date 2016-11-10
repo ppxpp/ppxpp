@@ -18,9 +18,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".RecyclerViewActivity"></activity>
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".RecyclerViewActivity" />
 
         <service
             android:name=".service.PopupViewService"
@@ -28,11 +27,14 @@
             android:exported="true" />
 
         <activity android:name=".STTTestActivity">
+        </activity>
+        <activity android:name=".NumberActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter></activity>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
